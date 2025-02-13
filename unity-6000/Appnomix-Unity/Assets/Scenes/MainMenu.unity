@@ -784,7 +784,6 @@ GameObject:
   - component: {fileID: 1013209277}
   - component: {fileID: 1013209276}
   - component: {fileID: 1013209275}
-  - component: {fileID: 1175177887}
   m_Layer: 5
   m_Name: TRACK OFFER
   m_TagString: Untagged
@@ -812,18 +811,6 @@ RectTransform:
   m_AnchoredPosition: {x: 17, y: -24}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1175177887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1175177885}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671dcbeb78cbf3f47a05fa2feb217a28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1432362259 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1362503979, guid: df46a9254aca4eb45baeb22c2d2014f9, type: 3}
@@ -1305,7 +1292,6 @@ GameObject:
   - component: {fileID: 648612215}
   - component: {fileID: 648612214}
   - component: {fileID: 1725937954}
-  - component: {fileID: 1725937953}
   m_Layer: 5
   m_Name: ONBOARDING
   m_TagString: Untagged
@@ -1333,18 +1319,6 @@ RectTransform:
   m_AnchoredPosition: {x: 24, y: 376}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1725937953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1725937951}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671dcbeb78cbf3f47a05fa2feb217a28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1725937954
 MonoBehaviour:
   m_ObjectHideFlags: 0

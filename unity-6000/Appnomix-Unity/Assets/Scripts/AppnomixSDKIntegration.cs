@@ -69,7 +69,7 @@ public class AppnomixSDKIntegration : MonoBehaviour
 
     public void TrackOffer(string context)
     {
-        _sdk.TrackOfferDisplay("app_start");
+        _sdk.TrackOfferDisplay(context);
     }
 
     // Update is called once per frame
