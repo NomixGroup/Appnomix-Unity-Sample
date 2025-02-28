@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dependencies>
     <androidPackages>
-        <androidPackage spec="app.appnomix:keyboard-sdk:1.0.12" />
+        <androidPackage spec="app.appnomix:keyboard-sdk:1.0.13" />
     </androidPackages>
 </dependencies>
