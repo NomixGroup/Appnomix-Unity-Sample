@@ -16,14 +16,19 @@ dependencyResolutionManagement {
         **ARTIFACTORYREPOSITORY**
         google()
         mavenCentral()
+// Android Resolver Repos Start
+        def unityProjectPath = $/file:///**DIR_UNITYPROJECT**/$.replace("\\", "/")
         mavenLocal()
+// Android Resolver Repos End
         flatDir {
             dirs "${project(':unityLibrary').projectDir}/libs"
         }
-        
         maven {
             url "s3://appnomix-maven-repo/maven"
-            
-        }   
+            credentials(AwsCredentials) {
+                accessKey "_INSERT_ACCESS_KEY_"
+                secretKey "_INSERT_SECRET_KEY_"
+            }
+        }
     }
 }
