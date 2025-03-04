@@ -57,6 +57,7 @@ end
 # Set the extension point identifier for a custom keyboard extension.
 new_target.build_configurations.each do |config|
   config.build_settings['NSExtensionPointIdentifier'] = 'com.apple.keyboard-service'
+  config.build_settings['PRODUCT_MODULE_NAME'] = "$NEW_TARGET_NAME"
   config.build_settings['NSExtensionPrincipalClass'] = '\$(PRODUCT_MODULE_NAME).KeyboardViewController'
   config.build_settings['SWIFT_VERSION'] = '5.0'
   config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
