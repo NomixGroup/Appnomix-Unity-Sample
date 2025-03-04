@@ -9,9 +9,16 @@ source "$(dirname "$0")/SetupXCode/xcode_framework.sh"
 source "$(dirname "$0")/SetupXCode/xcode_app_groups.sh"
 source "$(dirname "$0")/SetupXCode/xcode_update_main.sh"
 source "$(dirname "$0")/SetupXCode/xcode_get_bundle_name.sh"
+source "$(dirname "$0")/SetupXCode/xcode_files_to_compile.sh"
+source "$(dirname "$0")/SetupXCode/xcode_add_permissions.sh"
+source "$(dirname "$0")/SetupXCode/xcode_update_content_view.sh"
+source "$(dirname "$0")/SetupXCode/xcode_update_keyboard_content.sh"
 
-### TODO: This value should correspond to the app group name used in the AppnomixKeyboardSDK.start call
+### TODO: These values should be set by the client
 APP_GROUPS_NAME=group.app.appnomix.demo-unity
+YOUR_CLIENT_ID=your-client
+YOUR_AUTH_TOKEN=your-auth-token
+YOUR_APP_SCHEME=your-app-scheme
 
 # Check if APP_GROUPS_NAME is defined and not empty
 if [ -z "$APP_GROUPS_NAME" ]; then
@@ -96,6 +103,8 @@ echo "**Step: add_xcassets_to_target"
 add_xcassets_to_target "$PROJECT_PATH/$XCODEPROJ_FILE" "$TARGET_NAME" "Appnomix.xcassets"
 echo "**Step: add_files_to_target"
 add_files_to_target "$PROJECT_PATH/$XCODEPROJ_FILE" "Unity-iPhone" "MainApp" "$PROJECT_PATH/MainApp"
+echo "**Step: add_file_to_compile_sources"
+add_file_to_compile_sources "$PROJECT_PATH/$XCODEPROJ_FILE" "$APP_EXTENSION_NAME" "$PROJECT_PATH/MainApp/TypeProSharedSettingsKeys.swift"
 
 # Add frameworks
 echo "**Step: add_framework_reference"
@@ -110,7 +119,20 @@ ensure_app_groups_exists "$PROJECT_PATH/$XCODEPROJ_FILE" "$TARGET_NAME" "$TARGET
 ensure_app_groups_exists "$PROJECT_PATH/$XCODEPROJ_FILE" "$APP_EXTENSION_NAME" "$APP_EXTENSION_NAME/Appnomix Extension.entitlements" "$APP_GROUPS_NAME"
 
 # Update main.mm
+echo "**Step: update_main_mm"
 update_main_mm "$PROJECT_PATH/MainApp/main.mm" "$BUNDLE_NAME"
+
+# Add NSUserTrackingUsageDescription to Info.plist
+echo "**Step: add_privacy_permissions"
+add_privacy_permissions "$PROJECT_PATH/$XCODEPROJ_FILE"
+
+# Update ContentView.Swift
+echo "**Step: update_content_view_file"
+update_content_view_file "$PROJECT_PATH/MainApp/ContentView.swift"
+
+# Update KeyboardContentView.swift
+echo "**Step: update_keyboard_content_file"
+update_keyboard_content_file "$PROJECT_PATH/$APP_EXTENSION_NAME/KeyboardViewController.swift"
 
 # Function to list all targets in the project using xcodeproj gem
 echo "**Step: list_all_targets"
