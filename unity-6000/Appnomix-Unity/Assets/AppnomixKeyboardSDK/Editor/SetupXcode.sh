@@ -7,6 +7,8 @@ source "$(dirname "$0")/SetupXCode/xcode_files_to_target.sh"
 source "$(dirname "$0")/SetupXCode/xcode_files_build_phase.sh"
 source "$(dirname "$0")/SetupXCode/xcode_framework.sh"
 source "$(dirname "$0")/SetupXCode/xcode_app_groups.sh"
+source "$(dirname "$0")/SetupXCode/xcode_update_main.sh"
+source "$(dirname "$0")/SetupXCode/xcode_get_bundle_name.sh"
 
 ### TODO: This value should correspond to the app group name used in the AppnomixKeyboardSDK.start call
 APP_GROUPS_NAME=group.app.appnomix.demo-unity
@@ -37,7 +39,10 @@ TARGET_NAME=$(basename "$XCODEPROJ_FILE" .xcodeproj)
 echo "Found TARGET_NAME=$TARGET_NAME"
 echo "Found BUNDLE_ID=$BUNDLE_ID"
 
-APP_EXTENSION_NAME="$TARGET_NAME Keyboard"
+BUNDLE_NAME=$(get_bundle_name "$PROJECT_PATH")
+echo "Found BUNDLE_NAME=$BUNDLE_NAME"
+
+APP_EXTENSION_NAME="$BUNDLE_NAME Keyboard"
 APP_EXTENSION_DIR_PATH="$PROJECT_PATH/$APP_EXTENSION_NAME"
 
 # Check if exactly one .xcodeproj file was found
@@ -66,9 +71,13 @@ echo "Appnomix Keyboard Resources are downloaded and unzipped successfully."
 # Copy all files and folders to the project folder
 mkdir -p "$APP_EXTENSION_DIR_PATH"
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Keyboard/"/* "$APP_EXTENSION_DIR_PATH"
-cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Frameworks/"/* "$PROJECT_PATH"
+
+mkdir -p "$PROJECT_PATH/Frameworks"
+cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Frameworks/"/* "$PROJECT_PATH/Frameworks"
+
 mkdir -p "$PROJECT_PATH/Appnomix.xcassets"
-cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix.xcassets/"/* "$PROJECT_PATH/Appnomix.xcassets"
+cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/Appnomix.xcassets/"/* "$PROJECT_PATH/Appnomix.xcassets"
+
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/"/* "$PROJECT_PATH/MainApp"
 
 cd "$PROJECT_PATH"
@@ -93,6 +102,9 @@ add_framework_reference "$PROJECT_PATH/$XCODEPROJ_FILE" "KeyboardView.xcframewor
 # Configure App Groups
 ensure_app_groups_exists "$PROJECT_PATH/$XCODEPROJ_FILE" "$TARGET_NAME" "$TARGET_NAME/$TARGET_NAME.entitlements" "$APP_GROUPS_NAME"
 ensure_app_groups_exists "$PROJECT_PATH/$XCODEPROJ_FILE" "$APP_EXTENSION_NAME" "$APP_EXTENSION_NAME/Appnomix Extension.entitlements" "$APP_GROUPS_NAME"
+
+# Update main.mm
+update_main_mm "$PROJECT_PATH/MainApp/main.mm" "$BUNDLE_NAME"
 
 # Function to list all targets in the project using xcodeproj gem
 list_all_targets() {
