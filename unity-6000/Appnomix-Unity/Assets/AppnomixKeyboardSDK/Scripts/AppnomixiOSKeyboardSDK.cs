@@ -13,8 +13,8 @@ namespace AppnomixKeyboardSDK.Scripts
         //     string authToken,
         //     string appGroupName);
 
-        [DllImport("__Internal")]
-        private static extern void AppnomixKeyboardSDK_showOnboarding();
+        // [DllImport("__Internal")]
+        // private static extern void AppnomixKeyboardSDK_showOnboarding();
 
         private readonly string clientID;
         private readonly string authToken;
@@ -52,7 +52,7 @@ namespace AppnomixKeyboardSDK.Scripts
         {
             try
             {
-                AppnomixKeyboardSDK_showOnboarding();
+                // AppnomixKeyboardSDK_showOnboarding(callback);
             }
             catch (System.Exception e)
             {
