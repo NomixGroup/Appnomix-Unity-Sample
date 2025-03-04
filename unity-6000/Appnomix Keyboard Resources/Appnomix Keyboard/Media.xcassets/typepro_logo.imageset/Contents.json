@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "typepro-icon-30x30 with padding.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
