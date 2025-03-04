@@ -2,14 +2,15 @@
 
 # Usage: add_custom_keyboard_extension_target <path_to_xcodeproj> <new_target_name>
 add_custom_keyboard_extension_target() {
-  if [ "$#" -ne 3 ]; then
-    echo "Usage: add_custom_keyboard_extension_target <path_to_xcodeproj> <new_target_name> <files_directory>"
+  if [ "$#" -ne 4 ]; then
+    echo "Usage: add_custom_keyboard_extension_target <path_to_xcodeproj> <new_target_name> <files_directory> <app_target>"
     return 1
   fi
 
   local XCODEPROJ_PATH="$1"
   local NEW_TARGET_NAME="$2"
   local FILES_DIR="$3"
+  local APP_TARGET="$4"
 
   ruby <<EOF
 require 'xcodeproj'
@@ -28,6 +29,11 @@ puts "Files: '$FILES_DIR'"
 
 # Create a new custom keyboard extension target.
 new_target = project.new_target('com.apple.product-type.app-extension', "$NEW_TARGET_NAME", 'iOS', '15.0')
+app_target = project.targets.find { |t| t.name == "$APP_TARGET" }
+puts "app target"
+if app_target && new_target
+  app_target.add_dependency(new_target)
+end
 
 # Get DEVELOPMENT_TEAM from the first target's build settings
 development_team = nil
@@ -69,7 +75,7 @@ group = project.main_group.find_subpath("$NEW_TARGET_NAME", true)
 group.set_source_tree('<group>')
 
 # Add all .swift files from the given directory
-Dir.glob('$FILES_DIR/*.{swift}') do |file|  # Fix file filtering
+Dir.glob('$FILES_DIR/*.{swift,plist,entitlements}') do |file|  # Fix file filtering
   file_ref = group.new_reference(file)
   new_target.add_file_references([file_ref])
   puts "Added file: #{file}"
