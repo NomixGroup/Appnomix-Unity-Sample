@@ -78,6 +78,10 @@ cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Frameworks/"/* "$PROJECT_P
 mkdir -p "$PROJECT_PATH/Appnomix.xcassets"
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/Appnomix.xcassets/"/* "$PROJECT_PATH/Appnomix.xcassets"
 
+cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Frameworks/"/* "$PROJECT_PATH"
+mkdir -p "$PROJECT_PATH/MainApp/Appnomix.xcassets"
+
+cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/Appnomix.xcassets/"/* "$PROJECT_PATH/MainApp/Appnomix.xcassets"
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/"/* "$PROJECT_PATH/MainApp"
 
 cd "$PROJECT_PATH"
