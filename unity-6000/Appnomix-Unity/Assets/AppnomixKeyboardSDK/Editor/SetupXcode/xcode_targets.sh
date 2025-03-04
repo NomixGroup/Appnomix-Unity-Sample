@@ -66,6 +66,7 @@ new_target.build_configurations.each do |config|
   config.build_settings['GENERATE_INFOPLIST_FILE'] = 'YES'
   config.build_settings['INFOPLIST_FILE'] = "$NEW_TARGET_NAME/Info.plist"
   config.build_settings['INFOPLIST_KEY_CFBundleDisplayName'] = "$NEW_TARGET_NAME"
+  config.build_settings['CONTENTS_FOLDER_PATH'] = "$NEW_TARGET_NAME.appex"
 end
 
 new_target.product_type = 'com.apple.product-type.app-extension'
@@ -89,23 +90,6 @@ if File.exist?(xcassets_path)
   puts "Added asset catalog: #{xcassets_ref.real_path}"
 end
 
-# Add the new extension to "Embed Foundation Extensions" phase
-# copy_phase = project.new(Xcodeproj::Project::Object::PBXCopyFilesBuildPhase)
-# copy_phase.name = "Embed Foundation Extensions"
-# copy_phase.dst_subfolder_spec = '13'
-# project.targets.first.build_phases << copy_phase
-
-# Create and add the extension proxy
-# container_proxy = project.new(Xcodeproj::Project::Object::PBXContainerItemProxy)
-# container_proxy.container_portal = project.root_object.uuid
-# container_proxy.proxy_type = '1'
-# container_proxy.remote_global_id_string = new_target.uuid
-# container_proxy.remote_info = '$NEW_TARGET_NAME'
-
-# # Add the extension as a build file to the copy phase
-# build_file = project.new(Xcodeproj::Project::Object::PBXBuildFile)
-# build_file.file_ref = new_target.product_reference
-# copy_phase.files << build_file
 
 project.save
 puts "Added new custom keyboard extension target: #{new_target.name}"
