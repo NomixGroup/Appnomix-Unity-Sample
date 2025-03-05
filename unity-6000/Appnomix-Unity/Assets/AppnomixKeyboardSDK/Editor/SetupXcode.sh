@@ -135,12 +135,12 @@ echo "**Step: add_privacy_permissions"
 add_privacy_permissions "$PROJECT_PATH/$XCODEPROJ_FILE"
 
 # Update ContentView.Swift
-echo "**Step: update_content_view_file"
-update_content_view_file "$PROJECT_PATH/MainApp/ContentView.swift"
+echo "**Step: update_app_files"
+update_app_files "$PROJECT_PATH/MainApp"
 
 # Update KeyboardContentView.swift
-echo "**Step: update_keyboard_content_file"
-update_keyboard_content_file "$PROJECT_PATH/$APP_EXTENSION_NAME/KeyboardViewController.swift"
+echo "**Step: update_keyboard_files"
+update_keyboard_files "$PROJECT_PATH/$APP_EXTENSION_NAME"
 
 # Function to list all targets in the project using xcodeproj gem
 echo "**Step: list_all_targets"
