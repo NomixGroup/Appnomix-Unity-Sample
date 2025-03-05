@@ -69,6 +69,7 @@ new_target.build_configurations.each do |config|
   config.build_settings['CURRENT_PROJECT_VERSION'] = "$PRODUCT_VERSION"
   config.build_settings['MARKETING_VERSION'] = "$MARKETING_VERSION"
 
+  config.build_settings['LD_RUNPATH_SEARCH_PATHS'] = [ '@executable_path/../../Frameworks' ]
   config.build_settings['GENERATE_INFOPLIST_FILE'] = 'YES'
   config.build_settings['INFOPLIST_FILE'] = "#{new_target.name}/Info.plist"
   config.build_settings['INFOPLIST_KEY_CFBundleDisplayName'] = new_target.name
