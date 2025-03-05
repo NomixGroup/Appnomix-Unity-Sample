@@ -1,5 +1,15 @@
 #!/bin/bash
 
+
+
+### TODO: These values should be set by the client
+APP_GROUPS_NAME=group.your-app-group
+YOUR_CLIENT_ID=your-client-id # ask appnomix
+YOUR_AUTH_TOKEN=your-auth-token # ask appnomix
+YOUR_APP_SCHEME=your-app-scheme
+
+
+
 # Load functions
 source "$(dirname "$0")/SetupXCode/xcode_targets.sh"
 source "$(dirname "$0")/SetupXCode/xcode_resources.sh"
@@ -14,13 +24,6 @@ source "$(dirname "$0")/SetupXCode/xcode_files_to_compile.sh"
 source "$(dirname "$0")/SetupXCode/xcode_add_permissions.sh"
 source "$(dirname "$0")/SetupXCode/xcode_update_content_view.sh"
 source "$(dirname "$0")/SetupXCode/xcode_update_keyboard_content.sh"
-
-
-### TODO: These values should be set by the client
-APP_GROUPS_NAME=group.app.appnomix.demo-unity
-YOUR_CLIENT_ID=your-client
-YOUR_AUTH_TOKEN=your-auth-token
-YOUR_APP_SCHEME=your-app-scheme
 
 # Check if APP_GROUPS_NAME is defined and not empty
 if [ -z "$APP_GROUPS_NAME" ]; then
