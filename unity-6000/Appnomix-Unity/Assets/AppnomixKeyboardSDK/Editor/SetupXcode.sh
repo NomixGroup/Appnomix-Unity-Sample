@@ -80,22 +80,15 @@ if ! unzip -q "output.zip"; then
 fi
 echo "Appnomix Keyboard Resources are downloaded and unzipped successfully."
 
-# Copy all files and folders to the project folder
+# Copy Keyboard files
 mkdir -p "$APP_EXTENSION_DIR_PATH"
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Keyboard/"/* "$APP_EXTENSION_DIR_PATH"
 
+# Copy frameworks
 mkdir -p "$PROJECT_PATH/Frameworks"
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Frameworks/"/* "$PROJECT_PATH/Frameworks"
 
-# Assets should exist in Unity project; if not, copy new ones from zip file
-if [ ! -d "$PROJECT_PATH/AppnomixApp.xcassets" ]; then
-    echo "AppnomixApp.xcassets does not exist. Creating and copying files..."
-    mkdir -p "$PROJECT_PATH/AppnomixApp.xcassets"
-    cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/Appnomix.xcassets/"* "$PROJECT_PATH/AppnomixApp.xcassets"
-else
-    echo "AppnomixApp.xcassets already exists. Skipping copy."
-fi
-
+# Copy MainApp files
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/"/* "$PROJECT_PATH/MainApp"
 
 cd "$PROJECT_PATH"
