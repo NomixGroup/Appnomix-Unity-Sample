@@ -12,6 +12,9 @@ update_main_mm() {
 
     echo "Checking and updating $main_file..."
 
+    # Remove all spaces
+    unity_import_prefix="${unity_import_prefix// /}"
+
     # Construct the configurable import statement
     local unity_import="#import \"${unity_import_prefix}-Swift.h\""
 
