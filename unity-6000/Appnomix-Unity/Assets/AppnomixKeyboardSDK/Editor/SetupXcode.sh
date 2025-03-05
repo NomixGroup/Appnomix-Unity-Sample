@@ -36,7 +36,7 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 PROJECT_PATH="$1"
 
-TEMPLATE_URL="https://github.com/NomixGroup/Appnomix-Unity-Sample/releases/download/test/Appnomix.Keyboard.Resources.zip"
+TEMPLATE_URL="https://github.com/NomixGroup/Appnomix-Unity-Sample/releases/download/demo-0.3/Appnomix.Keyboard.Resources.zip"
 
 cd "$PROJECT_PATH"
 
