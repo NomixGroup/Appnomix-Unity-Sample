@@ -30,7 +30,7 @@ echo "Using Xcode version: $XCODE_VERSION"
 
 # Find the .xcodeproj file in the current directory
 XCODEPROJ_FILE=$(find . -name "*.xcodeproj" -maxdepth 1 -type d)
-BUNDLE_ID=$(xcodebuild -showBuildSettings | awk '/PRODUCT_BUNDLE_IDENTIFIER/ { print $3 }')
+BUNDLE_ID=$(xcodebuild -showBuildSettings | grep -w PRODUCT_BUNDLE_IDENTIFIER | awk '{ print $3 }')
 TARGET_NAME=$(basename "$XCODEPROJ_FILE" .xcodeproj)
 echo "Found TARGET_NAME=$TARGET_NAME"
 echo "Found BUNDLE_ID=$BUNDLE_ID"
