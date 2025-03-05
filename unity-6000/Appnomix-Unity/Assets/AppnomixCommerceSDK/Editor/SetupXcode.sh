@@ -274,7 +274,8 @@ if ! unzip "xcframework.zip"; then
 fi
 echo "XCFramework downloaded and unzipped successfully."
 
-mv "$XC_FRAMEWORK_NAME" "$PROJECT_PATH/"
+mkdir -p "$PROJECT_PATH/Frameworks"
+mv "$XC_FRAMEWORK_NAME" "$PROJECT_PATH/Frameworks/"
 
 add_framework_reference() {
     project_path="$1"
