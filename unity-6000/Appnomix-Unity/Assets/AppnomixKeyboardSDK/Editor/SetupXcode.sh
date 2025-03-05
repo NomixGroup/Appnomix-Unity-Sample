@@ -87,8 +87,14 @@ cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Keyboard/"/* "$APP_EXTENSI
 mkdir -p "$PROJECT_PATH/Frameworks"
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/Appnomix Frameworks/"/* "$PROJECT_PATH/Frameworks"
 
-mkdir -p "$PROJECT_PATH/Appnomix.xcassets"
-cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/Appnomix.xcassets/"/* "$PROJECT_PATH/Appnomix.xcassets"
+# Assets should exist in Unity project; if not, copy new ones from zip file
+if [ ! -d "$PROJECT_PATH/AppnomixApp.xcassets" ]; then
+    echo "AppnomixApp.xcassets does not exist. Creating and copying files..."
+    mkdir -p "$PROJECT_PATH/AppnomixApp.xcassets"
+    cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/Appnomix.xcassets/"* "$PROJECT_PATH/AppnomixApp.xcassets"
+else
+    echo "AppnomixApp.xcassets already exists. Skipping copy."
+fi
 
 cp -R "$TEMP_DIR/Appnomix Keyboard Resources/MainApp/"/* "$PROJECT_PATH/MainApp"
 
@@ -111,7 +117,7 @@ add_copy_files_build_phase "$XCODEPROJ_FILE" "$TARGET_NAME" "Embed Foundation Ex
 
 # Add files
 echo "**Step: add_xcassets_to_target"
-add_xcassets_to_target "$PROJECT_PATH/$XCODEPROJ_FILE" "$TARGET_NAME" "Appnomix.xcassets"
+add_xcassets_to_target "$PROJECT_PATH/$XCODEPROJ_FILE" "$TARGET_NAME" "AppnomixApp.xcassets"
 echo "**Step: add_files_to_target"
 add_files_to_target "$PROJECT_PATH/$XCODEPROJ_FILE" "Unity-iPhone" "MainApp" "$PROJECT_PATH/MainApp"
 echo "**Step: add_file_to_compile_sources"

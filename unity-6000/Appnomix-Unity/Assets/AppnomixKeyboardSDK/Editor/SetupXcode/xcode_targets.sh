@@ -89,8 +89,8 @@ Dir.glob('$FILES_DIR/*.{swift}') do |file|  # Fix file filtering
   puts "Added file: #{file}"
 end
 
-# Add Media.xcassets folder if it exists
-xcassets_path = File.join('$FILES_DIR', 'Media.xcassets')
+# Add AppnomixKeyboard.xcassets folder if it exists
+xcassets_path = File.join('$FILES_DIR', '../AppnomixKeyboard.xcassets')
 if File.exist?(xcassets_path)
   xcassets_ref = group.new_reference(xcassets_path)
   new_target.add_resources([xcassets_ref])

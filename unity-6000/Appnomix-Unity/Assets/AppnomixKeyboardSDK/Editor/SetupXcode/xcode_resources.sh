@@ -35,7 +35,7 @@ unless File.exist?(xcassets_path)
   exit 1
 end
 
-# Get or create a group specifically for Appnomix.xcassets under the main project structure
+# Get or create a group specifically for AppnomixApp.xcassets under the main project structure
 xcassets_group = project.main_group.find_subpath(xcassets_group_name, true)
 xcassets_group.set_source_tree('<group>')
 
@@ -45,7 +45,7 @@ xcassets_ref = xcassets_group.find_file_by_path(File.basename(xcassets_path)) ||
 # Add the xcassets reference to the resources build phase
 unless target.resources_build_phase.files_references.include?(xcassets_ref)
   target.resources_build_phase.add_file_reference(xcassets_ref)
-  puts "Added xcassets folder 'Appnomix.xcassets' to target: #{target_name}"
+  puts "Added xcassets folder 'AppnomixApp.xcassets' to target: #{target_name}"
 else
   puts "xcassets folder already exists in target: #{target_name}"
 end

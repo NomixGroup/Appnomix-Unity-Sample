@@ -25,6 +25,9 @@ namespace AppnomixKeyboardSDK.Editor
         {
             if (target == BuildTarget.iOS)
             {
+                // Copy the AppnomixApp.xcassets folder
+                CopyAssetsToXcodeProject(pathToBuiltProject);
+
                 // checking for dependencies (ruby)
                 string shellScriptPath = Application.dataPath + "/AppnomixKeyboardSDK/Editor/SetupDependencies.sh";
 
@@ -72,6 +75,68 @@ namespace AppnomixKeyboardSDK.Editor
                     // false errors are stoppping the process
                     //UnityEngine.Debug.LogError(error);
                 }
+            }
+        }
+
+        private static void CopyAssetsToXcodeProject(string pathToBuiltProject)
+        {
+            // Copy AppnomixApp.xcassets folder to Xcode project
+            string unityAssetsPath = Path.Combine(Application.dataPath, "AppnomixKeyboardSDK/Resources", "AppnomixApp.xcassets");
+            string xcodeProjectPath = Path.Combine(pathToBuiltProject, "AppnomixApp.xcassets");
+
+            if (!Directory.Exists(unityAssetsPath))
+            {
+                Debug.LogError("XCAssets folder not found in Unity: " + unityAssetsPath);
+                return;
+            }
+
+            try
+            {
+                CopyDirectory(unityAssetsPath, xcodeProjectPath);
+                Debug.Log("XCAssets folder copied successfully to Xcode project: " + xcodeProjectPath);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error copying XCAssets folder: " + e.Message);
+            }
+
+            // Copy AppnomixKeyboard.xcassets folder to Xcode project
+            unityAssetsPath = Path.Combine(Application.dataPath, "AppnomixKeyboardSDK/Resources", "AppnomixKeyboard.xcassets");
+            xcodeProjectPath = Path.Combine(pathToBuiltProject, "AppnomixKeyboard.xcassets");
+
+            if (!Directory.Exists(unityAssetsPath))
+            {
+                Debug.LogError("XCAssets folder not found in Unity: " + unityAssetsPath);
+                return;
+            }
+
+            try
+            {
+                CopyDirectory(unityAssetsPath, xcodeProjectPath);
+                Debug.Log("XCAssets folder copied successfully to Xcode project: " + xcodeProjectPath);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error copying XCAssets folder: " + e.Message);
+            }
+        }
+        private static void CopyDirectory(string sourceDir, string destinationDir)
+        {
+            if (!Directory.Exists(destinationDir))
+            {
+                Directory.CreateDirectory(destinationDir);
+            }
+
+            foreach (var file in Directory.GetFiles(sourceDir))
+            {
+                string destFile = Path.Combine(destinationDir, Path.GetFileName(file));
+                File.Copy(file, destFile, true);
+            }
+
+            foreach (var subDir in Directory.GetDirectories(sourceDir))
+            {
+                string destSubDir = Path.Combine(destinationDir, Path.GetFileName(subDir));
+                CopyDirectory(subDir, destSubDir);
             }
         }
     }
