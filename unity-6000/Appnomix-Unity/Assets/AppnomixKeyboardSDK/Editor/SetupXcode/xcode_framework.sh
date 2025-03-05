@@ -3,18 +3,20 @@
 add_framework_reference() {
     project_path="$1"
     xcframework_name="$2"
-    shift 2
+    embed_framework="$3" # New parameter: "YES" or "NO"
+    shift 3
     target_names=("$@")
 
     # convert the target names array into a Ruby-friendly string
     target_names_ruby=$(printf "'%s', " "${target_names[@]}")
     target_names_ruby="[${target_names_ruby%, }]"
 
-    ruby - <<EOF
+    ruby <<EOF
 require 'xcodeproj'
 
-project_path = '$project_path' # First argument is the path to .xcodeproj file
+project_path = '$project_path' # Path to .xcodeproj file
 xcframework_name = '$xcframework_name' # Name of the xcframework file
+embed_framework = '$embed_framework' # Should we embed?
 target_names = $target_names_ruby # Names of the targets
 
 # Open the Xcode project
@@ -32,18 +34,22 @@ target_names.each do |target_name|
       puts "Framework reference already exists in target: #{target_name}"
     end
 
-    # Embed and sign the framework
-    embed_phase = target.copy_files_build_phases.find { |phase| phase.name == 'Embed Frameworks' } ||
-                  target.new_copy_files_build_phase('Embed Frameworks')
+    # Embed only if embed_framework is "YES"
+    if embed_framework == "YES"
+      embed_phase = target.copy_files_build_phases.find { |phase| phase.name == 'Embed Frameworks' } ||
+                    target.new_copy_files_build_phase('Embed Frameworks')
 
-    embed_phase.symbol_dst_subfolder_spec = :frameworks # Embed frameworks into the Frameworks folder
+      embed_phase.symbol_dst_subfolder_spec = :frameworks # Embed frameworks into the Frameworks folder
 
-    unless embed_phase.files_references.include?(framework_ref)
-      build_file = embed_phase.add_file_reference(framework_ref)
-      build_file.settings = { 'ATTRIBUTES' => ['CodeSignOnCopy', 'RemoveHeadersOnCopy'] }
-      puts "Embedded and set CodeSignOnCopy for framework in target: #{target_name}"
+      unless embed_phase.files_references.include?(framework_ref)
+        build_file = embed_phase.add_file_reference(framework_ref)
+        build_file.settings = { 'ATTRIBUTES' => ['CodeSignOnCopy', 'RemoveHeadersOnCopy'] }
+        puts "Embedded and set CodeSignOnCopy for framework in target: \#{target_name}"
+      else
+        puts "Framework already embedded in target: \#{target_name}"
+      end
     else
-      puts "Framework already embedded and signed in target: #{target_name}"
+      puts "Skipping embedding for \#{target_name} (embed_framework is set to NO)"
     end
   else
     puts "Target not found: #{target_name}"
